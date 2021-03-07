@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Миссия Колонизация Марса</h1>
+    <h2>И на Марсе будут яблони цвести!</h2>
+    {% set man_list = lst %}
+    <div>
+        {% for man in man_list %}
+        {{ man }} - Каюта №{{ loop.index }} {% if loop.first %} - капитан корабля {% endif %}
+        <br>
+        {% endfor %}
+    </div>
+{% endblock %}
