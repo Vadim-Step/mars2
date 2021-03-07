@@ -397,6 +397,7 @@ def member():
     return render_template('index.html', a_list=a_list['astronauts'])
 
 
+@app.route('/answer')
 @app.route('/auto_answer')
 def auto_answer():
     param = {'title': 'Анкета', 'surname': 'Пупкин', 'name': 'Вася', 'education': 'ниже высшего',
