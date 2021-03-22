@@ -343,7 +343,7 @@ def pictures():
                                       <img src="{url_for('static', filename='img/mars2.jpg')}" class="d-block w-100" alt="..2.">
                                     </div>
                                     <div class="carousel-item">
-                                      <img src="{url_for('static', filename='img/mars3.jpg')}" class="d-block w-100" alt="..3.">
+                                      <img src="{url_for('static', filename='img/mars.jpg')}" class="d-block w-100" alt="..3.">
                                     </div>
                                   </div>
                                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
@@ -416,6 +416,33 @@ def login():
 @app.route('/success')
 def success():
     return render_template('success.html')
+
+
+PICS_NUM = 0
+
+
+@app.route('/galery', methods=['POST', 'GET'])
+def galery():
+    global PICS_NUM
+    if request.method == 'GET':
+        pics = []
+        for i in range(PICS_NUM):
+            pics.append(url_for('static', filename=f'load_img/mars{i + 1}.png'))
+        print(pics)
+        return render_template('carousel.html', title='Галерея', pics=pics)
+    elif request.method == 'POST':
+        f = request.files['file']
+        img = Image.open(f)
+        mars_file = f"static/load_img/mars{PICS_NUM + 1}.png"
+        if os._exists(f"static/load_img/mars{PICS_NUM + 1}.png"):
+            os.remove(f"static/load_img/mars{PICS_NUM + 1}.png")
+        img.save(mars_file)
+        PICS_NUM += 1
+        pics = []
+        for i in range(PICS_NUM):
+            pics.append(url_for('static', filename=f'load_img/mars{i + 1}.png'))
+        print(pics)
+        return render_template('carousel.html', title='Галерея', pics=pics)
 
 
 if __name__ == '__main__':
